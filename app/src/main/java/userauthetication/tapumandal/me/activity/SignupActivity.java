@@ -1,4 +1,4 @@
-package userauthetication.tapumandal.me;
+package userauthetication.tapumandal.me.activity;
 
 import android.app.Activity;
 
