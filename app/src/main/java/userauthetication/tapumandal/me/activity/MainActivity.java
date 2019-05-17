@@ -1,5 +1,6 @@
 package userauthetication.tapumandal.me.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.tv_not_registered_user:
+                startActivity(new Intent(getApplicationContext(), SignupActivity.class));
                 Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
                 break;
         }
