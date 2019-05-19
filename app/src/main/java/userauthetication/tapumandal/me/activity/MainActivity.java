@@ -1,4 +1,4 @@
-package userauthetication.tapumandal.me;
+package userauthetication.tapumandal.me.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import userauthetication.tapumandal.me.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
