@@ -81,13 +81,14 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             FirebaseUser user = mAuth.getCurrentUser();
 //                            updateUI(user);
                             Toast.makeText(getApplicationContext(), "Authentication Successfull.", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
 //                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
 //                            updateUI(null);
                         }
-
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         // ...
                     }
                 });
