@@ -9,6 +9,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import userauthetication.tapumandal.me.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -26,6 +29,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, Android!");
 
         switch (v.getId()) {
             case R.id.tv_not_registered_user:
