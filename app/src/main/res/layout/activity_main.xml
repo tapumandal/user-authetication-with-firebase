@@ -42,14 +42,38 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:paddingLeft="45dp"
+            android:paddingRight="45dp"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/bt_signin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="20dp"
+                android:layout_marginTop="15dp"
+                android:textColor="#000000"
+                android:background="#009688"
+                android:shadowColor="#0017521D"
+                android:text="@string/bt_signin"/>
+
             <TextView
                 android:id="@+id/tv_not_registered_user"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:padding="30dp"
-                android:layout_marginTop="10dp"
                 android:text="@string/not_registered_user"/>
+        </LinearLayout>
+
 
 
 
