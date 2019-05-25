@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import userauthetication.tapumandal.me.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -15,12 +18,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView textView;
     private EditText editText;
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
+
         findViewById(R.id.tv_not_registered_user).setOnClickListener(this);
+        findViewById(R.id.bt_signin).setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+//        Check the user if found then redirect to Profile Activity;
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+        }
     }
 
     @Override
@@ -31,6 +51,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(getApplicationContext(), SignupActivity.class));
                 Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
                 break;
+            
+            case R.id.bt_signin:
+                userLogin();
         }
+    }
+
+    private void userLogin() {
+
     }
 }
