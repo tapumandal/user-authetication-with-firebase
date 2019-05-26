@@ -1,10 +1,15 @@
 package userauthetication.tapumandal.me.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import userauthetication.tapumandal.me.R;
 import userauthetication.tapumandal.me.model.ProfileModel;
@@ -12,7 +17,7 @@ import userauthetication.tapumandal.me.model.ProfileModel;
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView proName, proEmail, proPhone;
-
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,6 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_profile);
         ProfileModel profileModel = (ProfileModel) getIntent().getSerializableExtra("profile");
+        currentUser = (FirebaseUser) getIntent().getSerializableExtra("currentUser");
 
         this.proName = (TextView) findViewById(R.id.tv_profile_name);
         this.proEmail = (TextView) findViewById(R.id.tv_profile_email);
@@ -33,4 +39,10 @@ public class ProfileActivity extends AppCompatActivity {
         this.proEmail.setText(profileModel.getEmail());
         this.proPhone.setText(profileModel.getPhone());
     }
+
+    public void signOut(View view){
+        currentUser = null;
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
 }

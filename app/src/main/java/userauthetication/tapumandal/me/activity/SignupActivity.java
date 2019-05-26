@@ -46,7 +46,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if currentUser is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if(currentUser == null){
@@ -87,13 +87,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            // Sign in success, update UI with the signed-in currentUser's information
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
                             Toast.makeText(getApplicationContext(), "Authentication Successfull.", Toast.LENGTH_SHORT).show();
-                            uploadProfile(user.getUid().toString());
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", (Serializable) profileModel));
+                            uploadProfile(currentUser.getUid().toString());
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign in fails, display a message to the currentUser.
 //                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
