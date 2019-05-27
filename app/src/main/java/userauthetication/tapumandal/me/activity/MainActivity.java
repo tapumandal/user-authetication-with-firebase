@@ -1,17 +1,24 @@
 package userauthetication.tapumandal.me.activity;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import userauthetication.tapumandal.me.R;
+import userauthetication.tapumandal.me.model.ProfileModel;
+import userauthetication.tapumandal.me.service.SharedData;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editText;
 
     private FirebaseAuth mAuth;
+
+    private SharedData sharedData;
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +46,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStart();
 
 //        Check the user if found then redirect to Profile Activity;
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
 
-            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+        if(sharedData.get("login", "uid") != null){
+//            ProfileModel profileModel = new ProfileModel(currentUser.getUid(),"My Name",currentUser.getEmail(),"0123456789");
+//            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
+
         }
     }
 
@@ -59,5 +70,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void userLogin() {
 
+        String email = ((EditText) findViewById(R.id.et_user_name)).getText().toString().trim();
+        String password = ((EditText) findViewById(R.id.et_password)).getText().toString().trim();
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+//                            sharedData = new SharedData();
+                            sharedData.set("login", "uid", currentUser.getUid());
+
+                            ProfileModel profileModel = new ProfileModel(currentUser.getUid(),"My Name",currentUser.getEmail(),"0123456789");
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
     }
 }
