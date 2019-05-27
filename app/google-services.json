@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "73326951725",
+    "firebase_url": "https://user-authetication.firebaseio.com",
+    "project_id": "user-authetication",
+    "storage_bucket": "user-authetication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73326951725:android:c006968d62ebbedf",
+        "android_client_info": {
+          "package_name": "userauthetication.tapumandal.me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73326951725-c9vnrhnjja3g8gq9vrnanmdnk6dm80cc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "userauthetication.tapumandal.me",
+            "certificate_hash": "9a7deebff8e50f69461cca19dc9246d6e5d8d9b8"
+          }
+        },
+        {
+          "client_id": "73326951725-cl3utchno704hiov63q8h48q4nu3jcq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1d_vj9fu9uO_BLXZMoQ77p-VMtistoJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73326951725-cl3utchno704hiov63q8h48q4nu3jcq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
