@@ -1,6 +1,8 @@
 package userauthetication.tapumandal.me.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +22,7 @@ import userauthetication.tapumandal.me.R;
 import userauthetication.tapumandal.me.model.ProfileModel;
 import userauthetication.tapumandal.me.service.SharedData;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 
     private TextView textView;
     private EditText editText;
@@ -47,11 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        Check the user if found then redirect to Profile Activity;
 
-        if(sharedData.get("login", "uid") != null){
+//        if(sharedData.get("login", "uid") != null){
 //            ProfileModel profileModel = new ProfileModel(currentUser.getUid(),"My Name",currentUser.getEmail(),"0123456789");
 //            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
 
-        }
+//        }
     }
 
     @Override
@@ -79,8 +81,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser currentUser = mAuth.getCurrentUser();
-//                            sharedData = new SharedData();
-                            sharedData.set("login", "uid", currentUser.getUid());
+
+                            //what is it?
+                            assert currentUser != null;
+                            set("login", "uid", currentUser.getUid());
+
+                            Toast.makeText(getApplicationContext(), "LoginUID: "+get("login", "uid"), Toast.LENGTH_SHORT).show();
 
                             ProfileModel profileModel = new ProfileModel(currentUser.getUid(),"My Name",currentUser.getEmail(),"0123456789");
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
@@ -91,5 +97,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         // ...
                     }
                 });
+    }
+
+
+    public void set(String infoType, String key, String value){
+        SharedPreferences sharedPre = getSharedPreferences(infoType, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPre.edit();
+
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    public String get(String infoType, String key){
+        SharedPreferences sharedPre = getSharedPreferences(infoType, Context.MODE_PRIVATE);
+        return sharedPre.getString(key, "");
     }
 }

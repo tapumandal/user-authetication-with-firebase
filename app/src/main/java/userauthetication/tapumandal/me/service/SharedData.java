@@ -3,8 +3,9 @@ package userauthetication.tapumandal.me.service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 
-public class SharedData extends Activity {
+public class SharedData extends AppCompatActivity {
 
     public void set(String infoType, String key, String value){
         SharedPreferences sharedPre = getSharedPreferences(infoType, Context.MODE_PRIVATE);
