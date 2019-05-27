@@ -14,14 +14,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.Serializable;
 
 import userauthetication.tapumandal.me.R;
+import userauthetication.tapumandal.me.model.ProfileModel;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String name;
+    private String phone;
     private String email;
     private String password;
+    private ProfileModel profileModel;
 
     private FirebaseAuth mAuth;
 
@@ -67,8 +74,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private void registerUser(){
         this.name = ((EditText) findViewById(R.id.et_name)).getText().toString().trim();
+        this.phone = ((EditText) findViewById(R.id.et_phone_number)).getText().toString().trim();
         this.email = ((EditText) findViewById(R.id.et_user_name)).getText().toString().trim();
         this.password = ((EditText) findViewById(R.id.et_password)).getText().toString().trim();
+
+        profileModel = new ProfileModel(null, this.name, this.email, this.phone);
 
         Toast.makeText(getApplicationContext(), this.name+"-"+this.email+"-"+this.password, Toast.LENGTH_LONG).show();
 
@@ -79,17 +89,21 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
                             Toast.makeText(getApplicationContext(), "Authentication Successfull.", Toast.LENGTH_SHORT).show();
+                            uploadProfile(user.getUid().toString());
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", (Serializable) profileModel));
                         } else {
                             // If sign in fails, display a message to the user.
 //                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
-//                            updateUI(null);
                         }
-
-                        // ...
                     }
                 });
+    }
+
+    private void uploadProfile(String uid) {
+        DatabaseReference proRef = FirebaseDatabase.getInstance().getReference("profiles");
+        profileModel.setId(uid);
+        proRef.child(uid).setValue(profileModel);
     }
 }

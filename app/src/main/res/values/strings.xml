@@ -8,4 +8,5 @@
     <string name="phone_number">Phone Number</string>
     <string name="bt_signup">Signup</string>
     <string name="title_activity_signup">Signup</string>
+    <string name="bt_signin">SignIn</string>
 </resources>
