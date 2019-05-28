@@ -32,29 +32,32 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     private SharedData sharedData;
     FirebaseUser currentUser;
 
+    private ProfileModel profileModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        sharedData = new SharedData();
 
         findViewById(R.id.tv_not_registered_user).setOnClickListener(this);
         findViewById(R.id.bt_signin).setOnClickListener(this);
     }
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
-//        Check the user if found then redirect to Profile Activity;
+        // Check the user if found then redirect to Profile Activity;
+        if(!sharedData.get("login", "uid", getApplicationContext()).isEmpty()){
 
-//        if(sharedData.get("login", "uid") != null){
-//            ProfileModel profileModel = new ProfileModel(currentUser.getUid(),"My Name",currentUser.getEmail(),"0123456789");
-//            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
-
-//        }
+            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
+        }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -62,11 +65,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         switch (v.getId()) {
             case R.id.tv_not_registered_user:
                 startActivity(new Intent(getApplicationContext(), SignupActivity.class));
-                Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT).show();
                 break;
             
             case R.id.bt_signin:
                 userLogin();
+                break;
         }
     }
 
@@ -80,36 +83,20 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                            currentUser = mAuth.getCurrentUser();
 
                             //what is it?
                             assert currentUser != null;
-                            set("login", "uid", currentUser.getUid());
+                            sharedData.set("login", "uid", currentUser.getUid(), getApplicationContext());
 
-                            Toast.makeText(getApplicationContext(), "LoginUID: "+get("login", "uid"), Toast.LENGTH_SHORT).show();
-
-                            ProfileModel profileModel = new ProfileModel(currentUser.getUid(),"My Name",currentUser.getEmail(),"0123456789");
+                            profileModel = new ProfileModel(currentUser.getUid(),"My Name",currentUser.getEmail(),"0123456789");
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
 
-
-    public void set(String infoType, String key, String value){
-        SharedPreferences sharedPre = getSharedPreferences(infoType, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPre.edit();
-
-        editor.putString(key, value);
-        editor.apply();
-    }
-
-    public String get(String infoType, String key){
-        SharedPreferences sharedPre = getSharedPreferences(infoType, Context.MODE_PRIVATE);
-        return sharedPre.getString(key, "");
-    }
 }
