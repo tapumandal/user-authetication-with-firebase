@@ -1,6 +1,8 @@
 package userauthetication.tapumandal.me.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -41,8 +43,19 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void signOut(View view){
-        currentUser = null;
+
+//        Toast.makeText(getApplicationContext(), "LOG OUT", Toast.LENGTH_LONG).show();
+        set("login", "uid", "");
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
+
+    public void set(String infoType, String key, String value){
+        SharedPreferences sharedPre = getSharedPreferences(infoType, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPre.edit();
+
+        editor.putString(key, value);
+        editor.apply();
     }
 
 }
