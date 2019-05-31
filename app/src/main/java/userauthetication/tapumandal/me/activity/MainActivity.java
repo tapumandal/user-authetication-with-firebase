@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import userauthetication.tapumandal.me.R;
 import userauthetication.tapumandal.me.model.ProfileModel;
 import userauthetication.tapumandal.me.service.SharedData;
+import userauthetication.tapumandal.me.service.UserData;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
 
@@ -53,8 +54,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
         // Check the user if found then redirect to Profile Activity;
         if(!sharedData.get("login", "uid", getApplicationContext()).isEmpty()){
-
-            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
+//            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
         }
     }
 
@@ -86,12 +86,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
                             currentUser = mAuth.getCurrentUser();
 
-                            //what is it?
-                            assert currentUser != null;
+                            Toast.makeText(getApplicationContext(), currentUser.getUid(), Toast.LENGTH_SHORT).show();
+//                            //what is it?
+//                            assert currentUser != null;
                             sharedData.set("login", "uid", currentUser.getUid(), getApplicationContext());
-
-                            profileModel = new ProfileModel(currentUser.getUid(),"My Name",currentUser.getEmail(),"0123456789");
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("currentUser", currentUser));
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
