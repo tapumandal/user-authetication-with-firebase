@@ -9,6 +9,8 @@ public class ProfileModel implements Serializable {
     String email;
     String phone;
 
+    public ProfileModel(){}
+
     public ProfileModel(String id, String name, String email, String phone) {
         this.id = id;
         this.name = name;
