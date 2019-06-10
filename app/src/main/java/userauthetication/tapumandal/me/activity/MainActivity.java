@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 //                            //what is it?
 //                            assert currentUser != null;
                             sharedData.set("login", "uid", currentUser.getUid(), getApplicationContext());
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("currentUser", currentUser));
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }

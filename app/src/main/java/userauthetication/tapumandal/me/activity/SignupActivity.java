@@ -22,6 +22,7 @@ import java.io.Serializable;
 
 import userauthetication.tapumandal.me.R;
 import userauthetication.tapumandal.me.model.ProfileModel;
+import userauthetication.tapumandal.me.service.SharedData;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +31,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private String email;
     private String password;
     private ProfileModel profileModel;
+    private SharedData sharedData;
 
     private FirebaseAuth mAuth;
 
@@ -40,6 +42,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_signup);
+
+        sharedData = new SharedData();
 
         findViewById(R.id.tv_go_back_signin).setOnClickListener(this);
         findViewById(R.id.bt_signup).setOnClickListener(this);
@@ -93,9 +97,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in currentUser's information
                             FirebaseUser currentUser = mAuth.getCurrentUser();
-                            Toast.makeText(getApplicationContext(), "Authentication Successfull.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Authentication Successfull."+currentUser.getUid(), Toast.LENGTH_SHORT).show();
                             uploadProfile(currentUser.getUid().toString());
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
+//                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class).putExtra("profile", profileModel ).putExtra("currentUser", currentUser));
+                            sharedData.set("login", "uid", currentUser.getUid(), getApplicationContext());
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         } else {
                             // If sign in fails, display a message to the currentUser.
 //                            Log.w(TAG, "createUserWithEmail:failure", task.getException());

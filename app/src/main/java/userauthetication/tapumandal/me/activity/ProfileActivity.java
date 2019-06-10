@@ -36,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_profile);
-        currentUser = (FirebaseUser) getIntent().getSerializableExtra("currentUser");
+//        currentUser = (FirebaseUser) getIntent().getSerializableExtra("currentUser");
 
         uid = new SharedData().get("login", "uid", this);
         profileData(uid);
