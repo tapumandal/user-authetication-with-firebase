@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "73326951725-idb79b6u58ktd9csspvpv9afo7lga615.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "userauthetication.tapumandal.me",
+            "certificate_hash": "59d96618e125c72282452243282156bc7574fffb"
+          }
+        },
+        {
           "client_id": "73326951725-6lheqj15sjplee0retb8glcbijjruhl8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
